@@ -19,6 +19,7 @@ package edu.eci.arsw.myrestaurant.restcontrollers;
 import edu.eci.arsw.myrestaurant.model.Order;
 import edu.eci.arsw.myrestaurant.model.ProductType;
 import edu.eci.arsw.myrestaurant.model.RestaurantProduct;
+import edu.eci.arsw.myrestaurant.model.dto.OrderDTO;
 import edu.eci.arsw.myrestaurant.services.RestaurantOrderServices;
 import edu.eci.arsw.myrestaurant.services.RestaurantOrderServicesStub;
 import java.util.Hashtable;
@@ -52,18 +53,25 @@ public class OrdersAPIController {
 
         try {
             Set<Integer> tables = ros.getTablesWithOrders();
+            StringBuilder sb = new StringBuilder();
             Map<Integer, String> ordersByTable = new Hashtable<>();
             List<Order> orders = new ArrayList<>();
+            List<OrderDTO> ordersDTO = new ArrayList<>();
             for (Integer i : tables) {
                 Integer total = ros.calculateTableBill(i);
                 Order order = ros.getTableOrder(i);
                 orders.add(order);
+                sb.append(order.toString());
+                sb.append("TotalBill: " + total);
                 String template = "{Order: "+ order.toString() + "TotalBill: " + total + "}";
                 ordersByTable.put(i, template);
+                ordersDTO.add(new OrderDTO(order, total));
+                // ordersByTable.put(i, template);
                 // ordersByTable.put(order, "TotalBill: " + total);
                 // ordersByTable.put(i, ros.getTableOrder(i));
+
             }
-            return ResponseEntity.ok(ordersByTable);
+            return ResponseEntity.ok(ordersDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
             // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
