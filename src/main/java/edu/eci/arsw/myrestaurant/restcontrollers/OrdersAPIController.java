@@ -44,22 +44,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrdersAPIController {
 
-    // @Autowired
-    RestaurantOrderServices ros = new RestaurantOrderServicesStub();
+    @Autowired
+    RestaurantOrderServices ros;
 
     @GetMapping("/orders")
     public ResponseEntity<?> getOrders() {
 
         try {
             Set<Integer> tables = ros.getTablesWithOrders();
-            Map<String, String> ordersByTable = new Hashtable<>();
+            Map<Integer, String> ordersByTable = new Hashtable<>();
             List<Order> orders = new ArrayList<>();
             for (Integer i : tables) {
                 Integer total = ros.calculateTableBill(i);
                 Order order = ros.getTableOrder(i);
                 orders.add(order);
-                String template = "{Order: "+ order + "TotalBill: " + total + "}";
-                ordersByTable.put(template, "TotalBill: " + total);
+                String template = "{Order: "+ order.toString() + "TotalBill: " + total + "}";
+                ordersByTable.put(i, template);
                 // ordersByTable.put(order, "TotalBill: " + total);
                 // ordersByTable.put(i, ros.getTableOrder(i));
             }

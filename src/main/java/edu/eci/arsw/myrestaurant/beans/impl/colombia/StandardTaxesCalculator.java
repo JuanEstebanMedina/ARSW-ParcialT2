@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import edu.eci.arsw.myrestaurant.model.RestaurantProduct;
 import edu.eci.arsw.myrestaurant.beans.TaxesCalculator;
 
-// @Service
+@Service
 public class StandardTaxesCalculator implements TaxesCalculator {
 
 	@Override

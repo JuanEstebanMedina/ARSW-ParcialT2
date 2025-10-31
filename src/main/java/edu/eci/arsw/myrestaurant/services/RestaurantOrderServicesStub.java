@@ -13,11 +13,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// @Service
+@Service
 public class RestaurantOrderServicesStub implements RestaurantOrderServices {
 
-    // BillCalculator calc = null;
-    BillCalculator calc = new BasicBillCalculator();
+    BillCalculator calc;
+    // BillCalculator calc = new BasicBillCalculator();
 
     private static final Map<String, RestaurantProduct> productsMap;
     private static final Map<Integer, Order> tableOrders;
@@ -25,10 +25,10 @@ public class RestaurantOrderServicesStub implements RestaurantOrderServices {
     public RestaurantOrderServicesStub() {
     }
 
-    // @Autowired
-    // public void setBillCalculator(BillCalculator calc) {
-    //     this.calc = calc;
-    // }
+    @Autowired
+    public void setBillCalculator(BillCalculator calc) {
+        this.calc = calc;
+    }
 
     @Override
     public Order getTableOrder(int tableNumber) {
