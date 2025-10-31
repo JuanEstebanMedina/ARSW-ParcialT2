@@ -53,23 +53,11 @@ public class OrdersAPIController {
 
         try {
             Set<Integer> tables = ros.getTablesWithOrders();
-            StringBuilder sb = new StringBuilder();
-            Map<Integer, String> ordersByTable = new Hashtable<>();
-            List<Order> orders = new ArrayList<>();
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for (Integer i : tables) {
                 Integer total = ros.calculateTableBill(i);
                 Order order = ros.getTableOrder(i);
-                orders.add(order);
-                sb.append(order.toString());
-                sb.append("TotalBill: " + total);
-                String template = "{Order: "+ order.toString() + "TotalBill: " + total + "}";
-                ordersByTable.put(i, template);
                 ordersDTO.add(new OrderDTO(order, total));
-                // ordersByTable.put(i, template);
-                // ordersByTable.put(order, "TotalBill: " + total);
-                // ordersByTable.put(i, ros.getTableOrder(i));
-
             }
             return ResponseEntity.ok(ordersDTO);
         } catch (Exception e) {

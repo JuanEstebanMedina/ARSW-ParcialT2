@@ -12,7 +12,8 @@ public class OrderDTO {
 
     private Map<String, Integer> orderAmountsMap;
     private Integer totalBill;
-
+    private int tableNumber;
+    
     public Map<String, Integer> getOrderAmountsMap() {
         return orderAmountsMap;
     }
@@ -21,7 +22,7 @@ public class OrderDTO {
         this.orderAmountsMap = orderAmountsMap;
     }
 
-    private int tableNumber;
+
 
     public OrderDTO() {
     }

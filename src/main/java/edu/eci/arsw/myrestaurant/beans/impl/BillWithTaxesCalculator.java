@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class BillWithTaxesCalculator implements BillCalculator {
 
     @Autowired
-    TaxesCalculator taxescalc = new StandardTaxesCalculator();
+    TaxesCalculator taxescalc;
 
     @Override
     public int calculateBill(Order o, Map<String, RestaurantProduct> productsMap) {
