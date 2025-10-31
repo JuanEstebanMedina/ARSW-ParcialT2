@@ -19,9 +19,13 @@ package edu.eci.arsw.myrestaurant.restcontrollers;
 import edu.eci.arsw.myrestaurant.model.Order;
 import edu.eci.arsw.myrestaurant.model.ProductType;
 import edu.eci.arsw.myrestaurant.model.RestaurantProduct;
+import edu.eci.arsw.myrestaurant.services.RestaurantOrderServices;
 import edu.eci.arsw.myrestaurant.services.RestaurantOrderServicesStub;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +42,31 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hcadavid
  */
 @RestController
-@RequestMapping(value = "/orders")
 public class OrdersAPIController {
 
-    @Autowired
-    RestaurantOrderServicesStub ros;
+    // @Autowired
+    RestaurantOrderServices ros = new RestaurantOrderServicesStub();
 
-    @GetMapping
-    public ResponseEntity<?> getOrders(){
+    @GetMapping("/orders")
+    public ResponseEntity<?> getOrders() {
+
+        try {
+            Set<Integer> tables = ros.getTablesWithOrders();
+            Map<Order, String> ordersByTable = new Hashtable<>();
+            List<Order> orders = new ArrayList<>();
+            for (Integer i : tables) {
+                Integer total = ros.calculateTableBill(i);
+                Order order = ros.getTableOrder(i);
+                orders.add(order);
+                ordersByTable.put(order, "TotalBill: " + total);
+                // ordersByTable.put(i, ros.getTableOrder(i));
+                
+            }
+            return ResponseEntity.ok(ordersByTable);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 }
