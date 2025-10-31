@@ -10,10 +10,9 @@ public class TaxesCalculator2016ColTributaryReform implements TaxesCalculator {
 
 	@Override
 	public float getProductTaxes(RestaurantProduct p) {
-		if (p.getType()==ProductType.DRINK){
+		if (p.getType() == ProductType.DRINK) {
 			return 0.16f;
-		}
-		else{
+		} else {
 			return 0.19f;
 		}
 	}

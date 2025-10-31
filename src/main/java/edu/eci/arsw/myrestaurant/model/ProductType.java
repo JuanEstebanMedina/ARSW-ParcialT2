@@ -10,5 +10,5 @@ package edu.eci.arsw.myrestaurant.model;
  * @author hcadavid
  */
 public enum ProductType {
-    DISH,DRINK;
+    DISH, DRINK;
 }

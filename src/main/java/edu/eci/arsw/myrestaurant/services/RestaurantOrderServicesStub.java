@@ -18,6 +18,10 @@ public class RestaurantOrderServicesStub implements RestaurantOrderServices {
     @Autowired
     BillCalculator calc = null;
 
+
+    private static final Map<String, RestaurantProduct> productsMap;
+    private static final Map<Integer, Order> tableOrders;
+
     public RestaurantOrderServicesStub() {
     }
 
@@ -82,10 +86,6 @@ public class RestaurantOrderServicesStub implements RestaurantOrderServices {
             return calc.calculateBill(tableOrders.get(tableNumber), productsMap);
         }
     }
-
-    private static final Map<String, RestaurantProduct> productsMap;
-
-    private static final Map<Integer, Order> tableOrders;
     
 
     static {

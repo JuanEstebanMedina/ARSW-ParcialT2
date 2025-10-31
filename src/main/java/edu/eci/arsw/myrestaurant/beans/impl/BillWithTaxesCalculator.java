@@ -17,9 +17,9 @@ public class BillWithTaxesCalculator implements BillCalculator {
     @Override
     public int calculateBill(Order o, Map<String, RestaurantProduct> productsMap) {
         int total = 0;
-        
+
         for (String p : o.getOrderedDishes()) {
-            RestaurantProduct rp=productsMap.get(p);
+            RestaurantProduct rp = productsMap.get(p);
             total += (o.getDishOrderedAmount(p) * (rp.getPrice() * (1 + taxescalc.getProductTaxes(rp))));
         }
         return total;
